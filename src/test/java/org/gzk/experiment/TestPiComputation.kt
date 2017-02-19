@@ -17,7 +17,7 @@ class TestPiComputation {
     @Test
     fun fanOutComputation() {
         val chunkSize = 100_000L
-        val chunkCount = 10_0000
+        val chunkCount = 10_000
         val pi = resultAndTime { fanOutSumLeibniz(chunkSize, chunkCount) }
         assertEquals(Math.PI, pi.result, .000_000_01)
         println("Computation of ${chunkCount*chunkSize} elements in ${pi.ms} ms")

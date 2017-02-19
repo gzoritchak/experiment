@@ -2,12 +2,14 @@ package org.gzk.experiment
 
 import kotlinx.coroutines.experimental.*
 
-fun fanOutSumLeibniz(chunkSize: Long, chunkCount: Int) = runBlocking {
+fun fanOutSumLeibniz(chunkSize: Long, chunkCount: Int): Double {
     val deferredResults = arrayListOf<Deferred<Double>>()
     for (i in 0..chunkCount - 1) {
         deferredResults += asyncSumLeibnizBetween(i * chunkSize, (i + 1) * chunkSize - 1)
     }
-    deferredResults.sumByDouble { it.await() }
+    return runBlocking {
+        deferredResults.sumByDouble { it.await() }
+    }
 }
 
 fun asyncSumLeibnizBetween(start: Long, end: Long) = async(CommonPool) {
